@@ -5,7 +5,7 @@
   "bin": {
     "create-repo": "./index.js"
   },
-  "main": "index.js",
+  "main": "src/fetchTermsWOTmanage.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch": "node src/fetchTermsWOTmanage.mjs"
