@@ -79,7 +79,7 @@ rl.question('Please enter the URL for the Google Sheets JSON endpoint: ', (url) 
       });
     })
     .on('error', (err) => {
-      console.log('Error: ' + err.message);
+      console.log('❌ Error: ' + err.message);
     });
 
   // Close the readline interface
@@ -291,7 +291,7 @@ function writeJSONFile(content) {
       if (err) {
         return console.log(err);
       }
-      console.log('JSON file has been written successfully.');
+      console.log('✅ JSON file has been written successfully.');
     }
   );
 } // End writeJSONFile
