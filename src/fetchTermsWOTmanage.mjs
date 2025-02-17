@@ -36,48 +36,55 @@ import fs from 'fs';
 import path from 'path';
 import https from 'https';
 import positionInArray from './positionInArray.mjs';
+import readline from 'readline';
 import { config } from 'dotenv';
 config();
-
-
-
-// # TERMS WOT MANAGE GOOGLE SHEET
-// TERMS_WOT_MANAGE_MARKDOWN = "./docs/02_overview/overview-and-context.mdx"
-// TERMS_WOT_MANAGE_JSON_DIR_NAME = "./static/json/"
-// TERMS_WOT_MANAGE_JSON_FILE_NAME = "overview.json"
-
-
 
 // CONFIG
 const outputPathMarkDown = "./data/overview-and-context.mdx";
 const outputDirJSON = "./data/json/";
 const outputFileNameJSON = "overview.json"
 
+
+// Create an interface for user input
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+
+
 // How to create JSON endpoint from Google Sheet: https://stackoverflow.com/a/68854199
 const url = process.env.TERMS_WOT_MANAGE_JSON_ENDPOINT;
 
-https
-  .get(url, (resp) => {
-    let data = '';
+// Ask the user for the URL
+rl.question('Please enter the URL for the Google Sheets JSON endpoint: ', (url) => {
+  https
+    .get(url, (resp) => {
+      let data = '';
 
-    // A chunk of data has been received.
-    resp.on('data', (chunk) => {
-      data += chunk;
+      // A chunk of data has been received.
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      // The whole response has been received. Print out the result.
+      resp.on('end', () => {
+        let oData = JSON.parse(data);
+        cleanup(oData); // writes back to oData
+        let relevantContent = oData.values;
+        createMarkDownFiles(relevantContent);
+        let strData = JSON.stringify(oData);
+        writeJSONFile(strData);
+      });
+    })
+    .on('error', (err) => {
+      console.log('Error: ' + err.message);
     });
 
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-      let oData = JSON.parse(data);
-      cleanup(oData);// writes back to oData
-      let relevantContent = oData.values;
-      createMarkDownFiles(relevantContent);
-      let strData = JSON.stringify(oData);
-      writeJSONFile(strData);
-    });
-  })
-  .on('error', (err) => {
-    console.log('Error: ' + err.message);
-  });
+  // Close the readline interface
+  rl.close();
+});
 
 function cleanup(content) {
   if (content !== undefined) {
