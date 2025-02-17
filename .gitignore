@@ -1,0 +1,18 @@
+# Create entries based on this project
+# https://www.gitignore.io/api/node,macos,visualstudiocode
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Visual Studio Code
+.vscode/
+.history
+# End of https://www.gitignore.io/api/node,macos,visualstudiocode
+
+# General
+.env
+data
