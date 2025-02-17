@@ -1,6 +1,6 @@
 {
   "name": "@korkor/chop-keri-main-glossary",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KERI repo to Grepo, Srepo and Krepo",
   "bin": {
     "create-repo": "./index.js"
