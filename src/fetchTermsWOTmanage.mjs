@@ -256,6 +256,12 @@ function createMarkDownFiles(content) {
     // End table container
     finalStringAll += `</div>`;
 
+    // Ensure the directory exists
+    const outputDir = path.dirname(outputPathMarkDown);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
     fs.writeFile(
       outputPathMarkDown,
       finalStringAll,
