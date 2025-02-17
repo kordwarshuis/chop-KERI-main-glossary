@@ -1,6 +1,6 @@
 {
   "name": "@korkor/chop-keri-main-glossary",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "KERI repo to Grepo, Srepo and Krepo",
   "bin": {
     "create-repo": "./src/fetchTermsWOTmanage.mjs"
